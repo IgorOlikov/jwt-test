@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\PostStoreRequest;
 use App\Models\Post;
+use App\Services\ImageStoreService;
 use Illuminate\Http\Request;
 
 class PostController extends Controller
@@ -20,9 +22,19 @@ class PostController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(PostStoreRequest $request)
     {
-        //
+        $publicPathStoredImage = (New ImageStoreService())->storePostImage($request->validated('image'));
+
+      $post = Post::create([
+           'user_id' => auth()->user()->id,
+           'image' =>  $publicPathStoredImage,             //$request->validated('image'), // storeService?
+           'title' =>  $request->validated('title'),
+            'description' => $request->validated('description'),
+            'text' => $request->validated('text'),
+        ]);
+
+      return response($post);
     }
 
     /**
