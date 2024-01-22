@@ -45,11 +45,14 @@ class PostController extends Controller
     {
        $comments = Comment::where('post_id','=',$post->id)->with(['owner','child_comments'])->whereNull('parent_id')->get();
 
+    //$comments = Comment::where('post_id','=',$post->id)->with('owner')->whereNull('parent_id')->get();
+    //$comments->load('child_comments');
+
      $post = $post->load('owner');
 
       $post = collect($post);
 
-    $post =  $post->concat($comments);
+      $post = $post->concat($comments);
 
        return response($post);
     }

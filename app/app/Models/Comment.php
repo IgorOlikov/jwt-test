@@ -32,7 +32,7 @@ class Comment extends Model
 
     public function child_comments(): HasMany
     {
-        return $this->hasMany(Comment::class,'parent_id','id')->with('child_comments');
+        return $this->hasMany(Comment::class,'parent_id','id')->with('owner','child_comments');
     }
 
 
