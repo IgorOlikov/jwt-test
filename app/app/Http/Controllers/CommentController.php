@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CommentCreateRequest;
 use App\Models\Post;
 use Illuminate\Http\Request;
 
@@ -10,7 +11,7 @@ class CommentController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Post $post)
     {
         //
     }
@@ -18,15 +19,23 @@ class CommentController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request,Post $post)
+    public function store(CommentCreateRequest $request,Post $post)
     {
-        //
+      $post = $post->comments()->create([
+            'post_id' => $post->id,
+            'user_id' => auth()->user()->id,
+            'parent_id' => $request->validated('parent_id'),
+            'comment' => $request->validated('comment'),
+        ]);
+
+       return response($post);
+
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show()
     {
         //
     }
