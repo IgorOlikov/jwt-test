@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
@@ -25,6 +26,8 @@ class BasicAuthController extends Controller
         ]);
 
            $user = User::create($creds);
+
+           Auth::login($user);
 
             return response(['message' => 'User '. $user->name .' has been created! Please login...'],201);
     }
