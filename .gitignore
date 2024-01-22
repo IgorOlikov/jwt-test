@@ -1,0 +1,4 @@
+app/vendor/
+.git
+.idea
+docker/postgresql
