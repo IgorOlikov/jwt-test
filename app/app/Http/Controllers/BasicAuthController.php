@@ -27,7 +27,7 @@ class BasicAuthController extends Controller
 
            $user = User::create($creds);
 
-           Auth::login($user);
+           //Auth::login($user);
 
             return response(['message' => 'User '. $user->name .' has been created! Please login...'],201);
     }

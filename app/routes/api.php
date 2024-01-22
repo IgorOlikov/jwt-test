@@ -12,16 +12,10 @@ use Illuminate\Support\Facades\Route;
       Route::post('register',[BasicAuthController::class,'store']);
    });
 
-
 //public
     Route::apiResource('/posts', PostController::class);
     Route::apiResource('/posts/{post}/comments',CommentController::class);
     Route::apiResource('/profile', ProfileController::class)->only('index');
-
-//protected
-//Route::middleware('api')->group(function () {
-//    Route::post('/posts/{post}/comment{comment}', [CommentController::class,'store']);
-//});
 
 //auth
 Route::prefix('auth')->middleware('api')->group(function () {
@@ -29,5 +23,4 @@ Route::prefix('auth')->middleware('api')->group(function () {
     Route::post('logout', [AuthController::class,'logout']);
     Route::post('refresh', [AuthController::class,'refresh']);
     Route::post('me', [AuthController::class,'me']);
-
 });

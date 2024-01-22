@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\PostStoreRequest;
+use App\Models\Comment;
 use App\Models\Post;
 use App\Services\ImageStoreService;
 use Illuminate\Http\Request;
@@ -42,7 +43,13 @@ class PostController extends Controller
      */
     public function show(Post $post)
     {
-       $post = $post->load('comments.child_comments');
+       $comments = Comment::where('post_id','=',$post->id)->with(['owner','child_comments'])->whereNull('parent_id')->get();
+
+     $post = $post->load('owner');
+
+      $post = collect($post);
+
+    $post =  $post->concat($comments);
 
        return response($post);
     }

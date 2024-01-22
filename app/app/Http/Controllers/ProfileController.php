@@ -13,8 +13,9 @@ class ProfileController extends Controller
     {
        $user = auth()->user();
 
-       return response($user);
+       $user->load('posts');
 
+       return response($user);
     }
 
     /**
