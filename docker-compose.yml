@@ -10,6 +10,7 @@ services:
     ports:
       - "80:80"
     depends_on:
+
       - postgresql
 
   php-fpm:
@@ -17,7 +18,7 @@ services:
       context: docker/php-fpm
       dockerfile: Dockerfile
     volumes:
-      - ./app/:/app
+      - ./app:/app
       ## - ./docker/php-configuration:/usr/local/etc/php
     environment:
       POSTGRES_HOST: postgresql
@@ -32,7 +33,7 @@ services:
       context: docker/php-cli
       dockerfile: Dockerfile
     volumes:
-      - ./app/:/app
+      - ./app:/app
       ##- ./docker/php-configuration:/usr/local/etc/php
     environment:
       POSTGRES_HOST: postgresql
