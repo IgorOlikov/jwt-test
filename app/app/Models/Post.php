@@ -11,4 +11,18 @@ class Post extends Model
 
     protected $table = 'posts';
     protected $fillable = ['user_id','image','title','description','text'];
+
+
+    public function comments()
+    {
+        return $this->hasMany(Comment::class,'post_id','id');
+    }
+
+    public function owner()
+    {
+        return $this->belongsTo(User::class);
+    }
+
+
+
 }
